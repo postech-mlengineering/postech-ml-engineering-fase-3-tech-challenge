@@ -61,3 +61,26 @@ Se preferir utilizar a interface web do Jupyter, execute o comando abaixo (certi
 jupyter notebook
 ```
 Isso abrirá o navegador onde você poderá navegar até a pasta `notebooks/` e executar os arquivos `.ipynb`.
+
+---
+
+## Execução do Dashboard Interativo (Streamlit)
+
+O projeto conta com um Dashboard interativo para visualização geográfica de atrasos e exploração dos modelos de Machine Learning construído com Streamlit.
+
+### 1. Instruções de como executar a agregação de dados e criar os modelos
+Como a base `flights.csv` é muito pesada (~600MB), é necessário executar o script de agregação para otimizar os dados em formato `.parquet` antes de iniciar o dashboard. 
+Isso fará todo o cruzamento de bases, agrupamentos geográficos e também criará e salvará os modelos de predição.
+
+Com o ambiente virtual ativado (e as dependências instaladas), execute:
+```bash
+python frontend-streamlit/scripts/aggregate_data.py
+```
+
+### 2. Como executar o Dashboard
+Para abri-lo, basta ir no seu terminal e rodar `streamlit run frontend-streamlit/app.py` (certifique-se de que o `.venv` está ativado) e colar este comando:
+
+```bash
+streamlit run frontend-streamlit/app.py
+```
+O navegador será aberto automaticamente (geralmente em http://localhost:8501) exibindo o Dashboard completo.
