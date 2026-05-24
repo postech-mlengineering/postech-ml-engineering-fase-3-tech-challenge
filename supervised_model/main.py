@@ -34,15 +34,15 @@ def main() -> None:
     try:
         os.makedirs('../models', exist_ok=True)
 
-        logger.info('ETAPA 1: Iniciando limpeza de dados.')
+        logger.info('ETAPA 1: Iniciando limpeza de dados')
         data_cleaner = DataCleaner(input_folder_path='../data/raw', output_file_path='../data/curated/data.pkl')
         data_cleaner.run_data_cleaning()
 
-        logger.info('ETAPA 2: Iniciando engenharia de features.')
+        logger.info('ETAPA 2: Iniciando engenharia de features')
         feature_engineer = FeatureEngineer(input_file_path='../data/curated/data.pkl', output_file_path='../data/curated/features.pkl')
         df = feature_engineer.run_pipeline()
 
-        logger.info('ETAPA 3: Separando dados de treino e teste.')
+        logger.info('ETAPA 3: Separando dados de treino e teste')
         X = df.drop(columns=['IS_DELAYED'])
         y = df['IS_DELAYED']
 
@@ -50,7 +50,7 @@ def main() -> None:
             X, y, test_size=0.2, random_state=42, stratify=y
         )
 
-        logger.info('ETAPA 4: Iniciando seleção do modelo.')
+        logger.info('ETAPA 4: Iniciando seleção do modelo')
         trainer = ModelTrainer()
         best_model_name: str = trainer.run_model_selection(
             X_train, y_train, X_test, y_test, 
@@ -78,7 +78,7 @@ def main() -> None:
         }
         joblib.dump(artifacts, artifacts_path)
         
-        logger.info('Pipeline executado com sucesso.')
+        logger.info('Pipeline executado com sucesso')
 
     except Exception as e:
         logger.error(f'Erro durante a execução do pipeline: {e}', exc_info=True)
