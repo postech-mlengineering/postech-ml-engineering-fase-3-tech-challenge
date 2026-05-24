@@ -1,10 +1,24 @@
+from typing import Union, List
+
+import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import plotly.figure_factory as ff 
 from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score
 
 
-def plot_confusion_matrix(y_true, y_pred):
-    cm = confusion_matrix(y_true, y_pred)
+def plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> None:
+    '''
+    Gera e exibe uma matriz de confusão interativa utilizando Plotly.
+
+    Args:
+        y_test (pd.Series): Vetor com os valores reais (target).
+        y_pred (np.ndarray): Vetor com os valores preditos pelo modelo.
+
+    Returns:
+        None: A função exibe o gráfico diretamente no notebook.
+    '''
+    cm = confusion_matrix(y_test, y_pred)
     x = ['Previsto Pontual', 'Previsto Atrasado']
     y = ['Real Pontual', 'Real Atrasado']
     
@@ -24,9 +38,20 @@ def plot_confusion_matrix(y_true, y_pred):
     fig.show()
 
 
-def plot_roc_curve(y_true, y_probs):
-    fpr, tpr, _ = roc_curve(y_true, y_probs)
-    auc_score = roc_auc_score(y_true, y_probs)
+def plot_roc_curve(y_test: pd.Series, y_probs: np.ndarray) -> None:
+    '''
+    Calcula e plota a curva ROC (Receiver Operating Characteristic) e o valor da AUC.
+
+    Args:
+        y_test (pd.Series): Vetor com os valores reais.
+        y_probs (np.ndarray): Vetor com as probabilidades da classe positiva 
+            (geralmente obtido via model.predict_proba()[:, 1]).
+
+    Returns:
+        None: A função exibe o gráfico diretamente no notebook.
+    '''
+    fpr, tpr, _ = roc_curve(y_test, y_probs)
+    auc_score = roc_auc_score(y_test, y_probs)
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(
@@ -46,7 +71,7 @@ def plot_roc_curve(y_true, y_probs):
         )
     )
     fig.update_layout(
-        title='ROC',
+        title='Curva ROC',
         xaxis_title='Taxa de Falso Positivo (1 - Especificidade)',
         yaxis_title='Taxa de Verdadeiro Positivo (Sensibilidade)',
         height=600,
@@ -55,11 +80,17 @@ def plot_roc_curve(y_true, y_probs):
     fig.show()
 
 
-import pandas as pd
-import plotly.graph_objects as go
+def plot_feature_importances(df: pd.DataFrame) -> None:
+    '''
+    Cria um gráfico de barras horizontal representando a importância de cada variável.
 
+    Args:
+        df (pd.DataFrame): DataFrame contendo obrigatoriamente as colunas 
+            ['Variável', 'Importância'], ordenado da maior para a menor importância.
 
-def plot_feature_importances(df):
+    Returns:
+        None: A função exibe o gráfico diretamente no notebook.
+    '''
     fig = go.Figure(
         data=[
             go.Bar(
