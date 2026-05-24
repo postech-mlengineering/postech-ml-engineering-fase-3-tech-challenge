@@ -147,7 +147,7 @@ class FeatureEngineer:
 
     def run_pipeline(self):
         '''Executa todo o processo de engenharia de dados.'''
-        print('Iniciando Feature Engineering...')
+        logging.info('Iniciando Feature Engineering')
         self.load_data()
         self._create_time_base()
         self._apply_airplane_delayed()
@@ -157,7 +157,7 @@ class FeatureEngineer:
         
         df_balanced = self._balance_data()
 
-        print(f'Salvando dados processados em: {self.output_file_path}')
+        logging.info(f'Salvando dados processados em: {self.output_file_path}')
         df_balanced.to_pickle(self.output_file_path)
         return df_balanced
 

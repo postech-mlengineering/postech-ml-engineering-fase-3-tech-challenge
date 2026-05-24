@@ -41,7 +41,7 @@ class ModelTrainer:
         summary = []
 
         for name, config in self.model_configs.items():
-            logger.info(f'Testando: {name}')
+            logger.info(f'Testando {name}')
             
             search = RandomizedSearchCV(
                 estimator=config['model'],

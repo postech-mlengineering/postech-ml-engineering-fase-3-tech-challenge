@@ -21,7 +21,7 @@ class DataCleaner:
 
     def _load_data(self) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         '''Carrega os arquivos brutos.'''
-        logger.info('Carregando arquivos brutos...')
+        logger.info('Carregando arquivos brutos')
         df_flights = pd.read_csv(f'{self.input_folder_path}/flights.csv')
         df_airlines = pd.read_csv(f'{self.input_folder_path}/airlines.csv')
         df_airports = pd.read_csv(f'{self.input_folder_path}/airports.csv')
@@ -29,7 +29,7 @@ class DataCleaner:
 
     def _merge_datasets(self, df_flights: pd.DataFrame, df_airlines: pd.DataFrame, df_airports: pd.DataFrame) -> pd.DataFrame:
         '''Realiza os cruzamentos entre as tabelas.'''
-        logger.info('Realizando merges dos datasets...')
+        logger.info('Realizando cruzamento dos datasets')
         
         df = df_flights.merge(
             df_airlines.rename(columns={'AIRLINE': 'AIRLINE_NAME'}), 
@@ -57,7 +57,7 @@ class DataCleaner:
         df_flights, df_airlines, df_airports = self._load_data()
         df = self._merge_datasets(df_flights, df_airlines, df_airports)
 
-        logger.info('Iniciando limpeza de nulos e filtros...')
+        logger.info('Iniciando tratamento dos dados')
         
         df[self.delay_cols] = df[self.delay_cols].fillna(0)
         df = df.drop(columns=['CANCELLATION_REASON'])
