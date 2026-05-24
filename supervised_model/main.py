@@ -1,4 +1,5 @@
 import logging
+import warnings
 import os 
 import joblib
 
@@ -8,6 +9,7 @@ from src.data_cleaning import DataCleaner
 from src.feature_engineering import FeatureEngineer
 from src.model_trainer import ModelTrainer
 
+warnings.filterwarnings('ignore')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -37,8 +39,8 @@ def main() -> None:
         data_cleaner.run_data_cleaning()
 
         logger.info('ETAPA 2: Iniciando engenharia de features.')
-        feature_engineer = FeatureEngineer(input_file_path='../data/curated/data.pkl')
-        df = feature_engineer.run_pipeline(output_file_path='../data/curated/features.pkl')
+        feature_engineer = FeatureEngineer(input_file_path='../data/curated/data.pkl', output_file_path='../data/curated/features.pkl')
+        df = feature_engineer.run_pipeline()
 
         logger.info('ETAPA 3: Separando dados de treino e teste.')
         X = df.drop(columns=['IS_DELAYED'])

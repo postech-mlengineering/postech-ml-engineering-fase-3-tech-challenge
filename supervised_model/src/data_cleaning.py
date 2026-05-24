@@ -20,8 +20,8 @@ class DataCleaner:
         ]
 
     def _load_data(self) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        '''Carrega os arquivos CSV originais.'''
-        logger.info('Carregando arquivos CSV...')
+        '''Carrega os arquivos brutos.'''
+        logger.info('Carregando arquivos brutos...')
         df_flights = pd.read_csv(f'{self.input_folder_path}/flights.csv')
         df_airlines = pd.read_csv(f'{self.input_folder_path}/airlines.csv')
         df_airports = pd.read_csv(f'{self.input_folder_path}/airports.csv')
