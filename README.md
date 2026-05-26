@@ -6,16 +6,16 @@ O projeto consiste em um pipeline completo de Machine Learning para **predição
 
 ---
 
-## Modelos Utilizados
+## 🤖 Modelos Utilizados
 
-### Modelos Não Supervisionados
+### 🔵 Modelos Não Supervisionados
 
 #### KMeans — Feature Engineering (Pré-processamento)
 Aplicado durante a engenharia de features para gerar perfis de risco de aeroportos de origem, rotas e companhias aéreas. O número ideal de clusters (K) é determinado automaticamente pelo **método do cotovelo** via `KneeLocator`, garantindo que os perfis reflitam agrupamentos naturais nos dados. As variáveis geradas (`ORIGIN_AIRPORT_PROFILE`, `ROUTE_PROFILE`, `AIRLINE_PROFILE`) são utilizadas diretamente como features de entrada para o modelo supervisionado.
 
 ---
 
-### Modelos Supervisionados — Pipeline Principal
+### 🟢 Modelos Supervisionados — Pipeline Principal
 
 A seleção do melhor modelo é feita via `RandomizedSearchCV` (CV=3), comparando o F1-Score ponderado entre os três candidatos abaixo. O vencedor passa por um fine-tuning adicional (CV=5, n_iter=10) antes de ser persistido.
 
@@ -54,7 +54,7 @@ Implementação clássica de gradient boosting sequencial do scikit-learn. Const
 
 ---
 
-## Pré-requisitos
+## ⚙️ Pré-requisitos
 
 Certifique-se de ter o **Python 3.11+** instalado. Recomendamos o uso do **[uv](https://github.com/astral-sh/uv)**, um gerenciador de pacotes Python extremamente rápido escrito em Rust.
 
@@ -65,7 +65,7 @@ pip install uv
 
 ---
 
-## Instalação
+## 📦 Instalação
 
 Clone o repositório e configure o ambiente virtual:
 
@@ -102,9 +102,9 @@ uv pip install -r requirements.txt
 
 ---
 
-## Como Executar
+## 🚀 Como Executar
 
-### Pipeline de Machine Learning
+### 🧠 Pipeline de Machine Learning
 
 Execute o pipeline completo de treinamento. Ele percorre as seguintes etapas automaticamente:
 
@@ -121,7 +121,27 @@ python main.py
 
 ---
 
-### (Opcional) Notebooks de Análise
+### 🖥️ Frontend — Dashboard Interativo
+
+O projeto inclui um dashboard interativo em **Streamlit** para análise e inferência em tempo real.
+
+```bash
+cd frontend
+streamlit run app.py
+```
+
+O dashboard conta com quatro páginas:
+
+| Página | Descrição |
+|---|---|
+| **Sobre** | Documentação técnica do projeto: metodologia, pipeline e resultados |
+| **Estatísticas** | Análise exploratória dos dados históricos e perfis de risco via clustering |
+| **Performance** | Métricas do modelo: relatório de classificação, matriz de confusão, curva ROC e importância das features |
+| **Predição de Atraso** | Interface para inferência em tempo real com gauge de probabilidade de atraso |
+
+---
+
+### 📓 (Opcional) Notebooks de Análise
 
 Os notebooks com as análises exploratórias estão em `notebooks/`. Para executá-los no VS Code, selecione o kernel do `.venv` criado acima. Alternativamente, via terminal:
 
@@ -131,7 +151,7 @@ jupyter notebook
 
 ---
 
-## Tecnologias
+## 🛠️ Tecnologias
 
 | Componente | Tecnologia | Versão | Descrição |
 |---|---|---|---|
@@ -141,6 +161,8 @@ jupyter notebook
 | Análise de Dados | Pandas | 3.0.2 | Manipulação e transformação de dados |
 | Análise de Dados | NumPy | 2.4.4 | Operações numéricas |
 | Visualização | Matplotlib / Seaborn | 3.10.9 / 0.13.2 | Gráficos de avaliação dos modelos |
+| Visualização | Plotly | 6.7.0 | Gráficos interativos com tema Synthwave |
+| Interface | Streamlit | — | Dashboard interativo multi-página |
 | Persistência | Joblib | 1.5.3 | Serialização de modelos |
 | Feriados | Holidays | — | Features de feriados dos EUA |
 | Elbow Method | Kneed | — | Identificação automática do K ideal no KMeans |
@@ -148,7 +170,7 @@ jupyter notebook
 
 ---
 
-## Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```
 .
@@ -157,6 +179,11 @@ jupyter notebook
 │   └── curated/                # Dados processados pelo pipeline
 ├── models/                     # Artefatos salvos dos modelos
 ├── notebooks/                  # Análises exploratórias
+├── frontend/                   # Dashboard Streamlit
+│   ├── app.py                  # Ponto de entrada e navegação
+│   ├── pages/                  # Páginas: about, analytics, performance, prediction
+│   ├── charts/                 # Gráficos Plotly com tema Synthwave
+│   └── services/               # Carregamento de dados, modelo e clustering
 ├── src/
 │   ├── data_cleaning.py        # Limpeza e cruzamento dos dados brutos
 │   ├── feature_engineering.py  # Engenharia de features e balanceamento
@@ -172,8 +199,8 @@ jupyter notebook
 
 ---
 
-## Colaboradores
+## 👥 Colaboradores
 
-Hugo Rodrigues
-Jorge Platero
-Leandro Delis
+1. Hugo Rodrigues
+2. Jorge Platero
+3. Leandro Delis
