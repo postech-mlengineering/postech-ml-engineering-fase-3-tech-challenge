@@ -175,3 +175,5 @@ jupyter notebook
 ## Colaboradores
 
 Hugo Rodrigues
+Jorge Platero
+Leandro Delis
