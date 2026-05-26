@@ -32,14 +32,14 @@ def main() -> None:
         Exception: Erro durante a execução do pipeline.
     '''
     try:
-        os.makedirs('../models', exist_ok=True)
+        os.makedirs('/models', exist_ok=True)
 
         logger.info('ETAPA 1: Iniciando limpeza de dados')
-        data_cleaner = DataCleaner(input_folder_path='../data/raw', output_file_path='../data/curated/data.pkl')
+        data_cleaner = DataCleaner(input_folder_path='data/raw', output_file_path='data/curated/data.pkl')
         data_cleaner.run_data_cleaning()
 
         logger.info('ETAPA 2: Iniciando engenharia de features')
-        feature_engineer = FeatureEngineer(input_file_path='../data/curated/data.pkl', output_file_path='../data/curated/features.pkl')
+        feature_engineer = FeatureEngineer(input_file_path='data/curated/data.pkl', output_file_path='data/curated/features.pkl')
         df = feature_engineer.run_pipeline()
 
         logger.info('ETAPA 3: Separando dados de treino e teste')
@@ -67,7 +67,7 @@ def main() -> None:
             n_iter=10
         )
 
-        artifacts_path = f'../models/best_model_{best_model_name.lower()}.pkl'
+        artifacts_path = f'/models/best_model_{best_model_name.lower()}.pkl'
         logger.info(f'ETAPA 6: Salvando modelo em {artifacts_path}')
         
         artifacts = {

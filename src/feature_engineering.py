@@ -163,5 +163,5 @@ class FeatureEngineer:
 
 
 if __name__ == '__main__':
-    feature_engineer = FeatureEngineer(input_file_path='../data/curated/data.pkl')
-    feature_engineer.run_pipeline(output_file_path='../data/curated/features.pkl')
+    feature_engineer = FeatureEngineer(input_file_path='data/curated/data.pkl')
+    feature_engineer.run_pipeline(output_file_path='data/curated/features.pkl')

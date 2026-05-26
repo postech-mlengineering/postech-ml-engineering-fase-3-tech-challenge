@@ -77,7 +77,7 @@ class DataCleaner:
         logger.info(f'Dados tratados salvos com sucesso em: {output_file_path}')
 
         return df
-    
+
 
 if __name__ == '__main__':
     input_folder_path = '../../data/raw'
