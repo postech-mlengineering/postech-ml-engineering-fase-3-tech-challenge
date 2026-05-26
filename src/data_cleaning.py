@@ -80,8 +80,8 @@ class DataCleaner:
 
 
 if __name__ == '__main__':
-    input_folder_path = '../../data/raw'
-    output_file_path = '../../data/curated/data.pkl'
+    input_folder_path = '../data/raw'
+    output_file_path = '../data/curated/data.pkl'
     
     data_cleaner = DataCleaner(input_folder_path=input_folder_path, output_file_path=output_file_path)
     data_cleaner.run_data_cleaning()

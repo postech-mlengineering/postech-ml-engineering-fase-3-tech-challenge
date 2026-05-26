@@ -10,7 +10,6 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 
-from src.feature_engineering import FeatureEngineer
 from src.model_config import MODEL_CONFIG
 
 
@@ -102,7 +101,7 @@ class ModelTrainer:
 
 
 if __name__ == '__main__':
-    df = pd.read_pickle('data/curated/features.pkl')
+    df = pd.read_pickle('../data/curated/features.pkl')
 
     X = df.drop(columns=['IS_DELAYED'])
     y = df['IS_DELAYED']
@@ -125,5 +124,5 @@ if __name__ == '__main__':
         y_test=y_test
     )
 
-    output_path = f'models/model_{model.lower()}.pkl'
+    output_path = f'../models/model_{model.lower()}.pkl'
     joblib.dump(model, output_path)
