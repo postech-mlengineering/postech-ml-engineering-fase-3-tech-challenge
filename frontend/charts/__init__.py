@@ -1,0 +1,6 @@
+SYNTH_BG = "#16213e"
+SYNTH_TEXT = "#00ffff"
+SYNTH_PINK = "#ff0080"
+SYNTH_ORANGE = "#ff6b00"
+SYNTH_GRID = "#1a1a2e"
+SYNTH_FONT = "Orbitron"
