@@ -1,45 +1,87 @@
 import streamlit as st
 
+
 def about_page():
-    st.title("✈️ Sistema de Análise e Predição de Atrasos Aéreos")
+    st.title('Sobre')
+    st.divider()
+
+    st.markdown('''
+    Este projeto implementa um pipeline end-to-end de **Machine Learning Engineering** para prever atrasos em voos domésticos nos EUA. 
+    A solução aborda desde o processamento brutos até a disponibilização de um modelo preditivo otimizado.
+    ''')
+
+    st.header('Limpeza e Consolidação dos Dados (`DataCleaner`)', divider='blue')
+    st.write('''
+    A etapa inicial consolida dados de voos, aeroportos e companhias aéreas para criar um contexto operacional completo.
+    ''')
     
-    st.markdown("""
-    ### 1. Visão Geral do Projeto
-    Este sistema foi desenvolvido como solução para o **Tech Challenge - Fase 3**, utilizando a base de dados de transporte aéreo dos EUA. O objetivo principal é identificar padrões de atraso e construir um modelo preditivo capaz de classificar a probabilidade de um voo sofrer atraso superior a 15 minutos (critério padrão da FAA).
+    with st.expander('Detalhes', expanded=False):
+        st.markdown('''
+        *   **Tratamento de Nulos:** Colunas de categoria de atraso (`AIR_SYSTEM_DELAY`, `WEATHER_DELAY`, etc.) preenchidas com **0**.
+        *   **Filtragem:** Remoção de voos cancelados (`CANCELLED`) ou desviados (`DIVERTED`), mantendo apenas a performance real de voo.
+        *   **Definição do Target:** A variável alvo `IS_DELAYED` é binária, considerando **1** para atrasos de chegada superiores a **15 minutos**.
+        ''')
 
-    ### 2. Metodologia e Pipeline de Dados
-    O projeto foi estruturado em um pipeline modular para garantir escalabilidade e reprodutibilidade:
+    st.header('Engenharia de Features (`FeatureEngineer`)', divider='blue')
+    st.write('A inteligência do modelo baseia-se em estatísticas derivadas do conjunto de dados.')
 
-    #### **A. Limpeza e Consolidação (Data Cleaning)**
-    - **Merge Relacional:** Consolidação de três fontes de dados (`flights`, `airlines` e `airports`).
-    - **Tratamento de Outliers e Nulos:** Imputação de valor zero para colunas de causas de atraso e remoção de voos cancelados ou desviados para focar estritamente na performance operacional.
-    - **Definição de Target:** Criação da variável binária `IS_DELAYED` baseada no campo `ARRIVAL_DELAY`.
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info('**Dinâmica Operacional**')
+        st.write('''
+        - **Rolling:** Médias móveis de 1 hora para capturar o status de atraso atual dos aeroportos de origem e destino.
+        - **Simultaneidade:** Contagem de decolagens na mesma janela horária no aeroporto de origem.
+        - **Desempenho da Aeronave:** Verifica se o voo anterior da aeromave atrasou em uma janela menor que 6h.
+        ''')
+            
+    with col2:
+        st.info('**Perfis**')
+        st.write('''
+        - **Clustering:** Perfis de risco para aeroportos e companhias aéreas baseados em volume vs. taxa de atraso histórica.
+        ''')
 
-    #### **B. Engenharia de Features (Feature Engineering)**
-    Esta é a camada mais crítica do projeto, onde foram aplicadas estratégias de:
-    - **Time-Series Momentum:** Cálculo de "atraso em cadeia" através do rastreamento do prefixo da aeronave (`TAIL_NUMBER`) e da inércia de atrasos no aeroporto de origem nas últimas 1h.
-    - **Análise de Contexto:** Integração com feriados nacionais dos EUA e definição de estações do ano (Sazonalidade).
-    - **Densidade Operacional:** Cálculo de voos simultâneos na mesma janela horária para medir saturação da infraestrutura.
+    with st.expander('Outras', expanded=False):
+        st.markdown('''
+        *   **Tempo:** Integração com a biblioteca `holidays` para detectar feriados nos EUA, além de sazonalidade e finais de semana.
+        *   **Distância:** Categorização automática da rota (Curta, Média ou Longa) baseada em quantis de distância.
+        ''')
 
-    #### **C. Modelagem Não Supervisionada (Clustering)**
-    - **Estratégia:** Aplicação do algoritmo **K-Means** para agrupar aeroportos e companhias aéreas.
-    - **Critério:** Os grupos foram definidos pela relação entre **Volume de Voos vs. Taxa de Atraso**, permitindo que o modelo supervisionado entenda o "perfil de risco" da entidade sem a necessidade de centenas de colunas de One-Hot Encoding.
+    with st.expander('Pré-processamento', expanded=False):
+        st.markdown('''
+        *   **Balanceamento:** Aplicação de **undersampling** (1:1) para evitar viés em favor de voos pontuais.
+        *   **Normalização:** Uso do `StandardScaler` persistido para garantir que variáveis de escala diferente (ex: mês vs. volume de voos) tenham peso equilibrado.
+        ''')
 
-    #### **D. Modelagem Supervisionada (Classification)**
-    - **Algoritmos:** Comparação sistemática entre **XGBoost, Random Forest e Gradient Boosting**.
-    - **Tratamento de Dados:** Aplicação de *Random Undersampling* para balancear as classes de atraso e *StandardScaler* para normalização das variáveis contínuas.
-    - **Otimização:** Uso de *RandomizedSearchCV* para ajuste de hiperparâmetros, focando na métrica **F1-Score** para garantir equilíbrio entre Precisão e Recall.
-
-    ### 3. Resultados e Conclusões
-    - **Performance:** O modelo final (XGBoost) apresentou solidez na identificação de atrasos sistêmicos, sendo sensível a variáveis de horário de pico e histórico imediato da aeronave.
-    - **Insights de Negócio:** A análise demonstrou que o "atraso de aeronave tardia" (Late Aircraft Delay) é o principal fator de propagação de atrasos, validando a estratégia de engenharia de features focada em `TAIL_NUMBER`.
+    st.header('Modelagem e Performance (`ModelTrainer`)', divider='blue')
     
-    ### 4. Tecnologias Utilizadas
-    - **Linguagem:** Python 3.x
-    - **Processamento:** Pandas, Scikit-learn, XGBoost
-    - **Interface:** Streamlit
-    - **Visualização:** Plotly (Gráficos interativos com tema Synthwave personalizado)
-    """)
+    st.success('**Modelo: XGBoost Classifier**')
+    
+    col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+    col_m1.metric('Acurácia', '74.84%')
+    col_m2.metric('F1-Score', '0.7460')
+    col_m3.metric('Precisão', '0.7581')
+    col_m4.metric('Recall', '0.7484')
+
+    with st.expander('Pipeline de Treinamento'):
+        st.markdown('''
+        O modelo foi selecionado através de uma competição rigorosa:
+        1.  **Model Selection:** Comparação entre **XGBoost**, **Random Forest** e **Gradient Boosting** utilizando `RandomizedSearchCV` com validação cruzada (CV=3).
+        2.  **Fine-Tuning:** Otimização de hiperparâmetros (como `max_depth`, `learning_rate` e `gamma`) no melhor modelo utilizando CV=5.
+        ''')
 
     st.divider()
-    st.caption("Documentação técnica do Tech Challenge - Grupo de Análise de Dados.")
+
+    col_tech, col_team = st.columns([2, 1])
+    with col_tech:
+        st.markdown('**Tecnologias:**')
+        st.code('Python 3.11 | XGBoost | Scikit-Learn | Pandas | KMeans | Joblib | Streamlit', language='text')
+    
+    with col_team:
+        st.markdown('**Colaboradores:**')
+        st.markdown('''
+        - Hugo Rodrigues
+        - Leandro Delis
+        - Jorge Platero
+        ''')
+
+    st.caption('Pós-Graduação em Machine Learning Engineering - FIAP | Fase 3 - Tech Challenge')

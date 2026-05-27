@@ -3,6 +3,7 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.figure_factory as ff 
 from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score
+
 from . import(
     SYNTH_BG,
     SYNTH_TEXT,
@@ -11,6 +12,7 @@ from . import(
     SYNTH_GRID,
     SYNTH_FONT
 )
+
 
 def plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> go.Figure:
     cm = confusion_matrix(y_test, y_pred)
@@ -31,7 +33,6 @@ def plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> go.Figure:
         font_colors=[SYNTH_TEXT, "white"]
     )
     
-    # Aplicação direta do estilo
     fig.update_layout(
         title=dict(text='Matriz de Confusão', font=dict(family=SYNTH_FONT, color=SYNTH_TEXT)),
         paper_bgcolor=SYNTH_BG,
@@ -44,11 +45,11 @@ def plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> go.Figure:
         margin=dict(l=150, r=120, b=120, t=120)
     )
     
-    # Forçar a fonte Synthwave nas anotações internas do heatmap
     for i in range(len(fig.layout.annotations)):
         fig.layout.annotations[i].font.family = SYNTH_FONT
         
     return fig
+
 
 def plot_roc_curve(y_test: pd.Series, y_probs: np.ndarray) -> go.Figure:
     fpr, tpr, _ = roc_curve(y_test, y_probs)
@@ -74,7 +75,6 @@ def plot_roc_curve(y_test: pd.Series, y_probs: np.ndarray) -> go.Figure:
         )
     )
     
-    # Aplicação direta do estilo
     fig.update_layout(
         title=dict(text='Curva ROC Performance', font=dict(family=SYNTH_FONT, color=SYNTH_TEXT)),
         paper_bgcolor=SYNTH_BG,
@@ -89,6 +89,7 @@ def plot_roc_curve(y_test: pd.Series, y_probs: np.ndarray) -> go.Figure:
         margin=dict(l=150, r=120, b=120, t=120)
     )
     return fig
+
 
 def plot_bars(df: pd.DataFrame) -> go.Figure:
     fig = go.Figure(
@@ -106,7 +107,6 @@ def plot_bars(df: pd.DataFrame) -> go.Figure:
         ]
     )
     
-    # Aplicação direta do estilo
     fig.update_layout(
         title=dict(text='Importância das Variáveis', font=dict(family=SYNTH_FONT, color=SYNTH_TEXT)),
         paper_bgcolor=SYNTH_BG,

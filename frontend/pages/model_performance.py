@@ -16,21 +16,21 @@ from charts.evaluation_plots import (
 
 def model_performance_page():
 
-    st.title("Performance")
+    st.title('Performance')
     
     df, df_features = load_data()
 
     if df is None or df.empty:
-        st.warning("Nenhum dado encontrado. Verifique a fonte de dados.")
+        st.warning('Nenhum dado encontrado. Verifique a fonte de dados.')
         return
 
     st.divider()
 
-    tab0, tab1, tab2, tab3 = st.tabs(["Relatório de Classificação", "Matriz de Confusão", "Curva ROC", "Peso das Variáveis"])
+    tab0, tab1, tab2, tab3 = st.tabs(['Relatório de Classificação', 'Matriz de Confusão', 'Curva ROC', 'Peso das Variáveis'])
 
     try:
         df_features = pd.read_pickle('../data/curated/features.pkl')
-        model = joblib.load("../models/model_xgboost.pkl")
+        model = joblib.load('../models/model_xgboost.pkl')
         
         X = df_features.drop(columns=['IS_DELAYED'])
         y = df_features['IS_DELAYED']
@@ -62,6 +62,6 @@ def model_performance_page():
             st.plotly_chart(fig, width='stretch')
 
     except FileNotFoundError:
-        st.error("Erro: Arquivos de modelo ou features não encontrados nos diretórios configurados.")
+        st.error('Erro: Arquivos de modelo ou features não encontrados nos diretórios configurados.')
     except Exception as e:
-        st.error(f"Erro ao gerar métricas de performance: {e}")
+        st.error(f'Erro ao gerar métricas de performance: {e}')

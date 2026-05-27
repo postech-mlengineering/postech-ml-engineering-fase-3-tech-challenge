@@ -9,15 +9,15 @@ from kneed import KneeLocator
 
 @st.cache_data(show_spinner=False)
 def load_data():
-    df = pd.read_pickle("../data/curated/data.pkl")
-    df_features = pd.read_pickle("../data/curated/features.pkl")
+    df = pd.read_pickle('../data/curated/data.pkl')
+    df_features = pd.read_pickle('../data/curated/features.pkl')
     return df, df_features
 
 
 @st.cache_resource(show_spinner=False)
 def load_resources():
-    model = joblib.load("../models/model_xgboost.pkl")
-    scaler = joblib.load("../models/scaler.pkl")
+    model = joblib.load('../models/model_xgboost.pkl')
+    scaler = joblib.load('../models/scaler.pkl')
     return model, scaler
 
 
@@ -35,7 +35,7 @@ def get_best_k(scaled_data, max_k=10):
 
 
 def get_cluster(df_input, group_col, target_col='IS_DELAYED'):
-    """Executa o processo de clustering conforme sua lógica fornecida"""
+    '''Executa o processo de clustering conforme sua lógica fornecida'''
     df_profile = df_input.groupby(group_col).agg({
         target_col: ['mean', 'count']
     }).reset_index()

@@ -1,13 +1,14 @@
-import logging
 import warnings
-import os 
+import logging
 import joblib
+import os 
 
 from sklearn.model_selection import train_test_split
 
 from src.data_cleaning import DataCleaner   
 from src.feature_engineering import FeatureEngineer
 from src.model_trainer import ModelTrainer
+
 
 warnings.filterwarnings('ignore')
 
@@ -35,11 +36,17 @@ def main() -> None:
         os.makedirs('../models', exist_ok=True)
 
         logger.info('ETAPA 1: Iniciando limpeza de dados')
-        data_cleaner = DataCleaner(input_folder_path='../data/raw', output_file_path='../data/curated/data.pkl')
+        data_cleaner = DataCleaner(
+            input_folder_path='../data/raw', 
+            output_file_path='../data/curated/data.pkl'
+        )
         data_cleaner.run_data_cleaning()
 
         logger.info('ETAPA 2: Iniciando engenharia de features')
-        feature_engineer = FeatureEngineer(input_file_path='../data/curated/data.pkl', output_file_path='../data/curated/features.pkl')
+        feature_engineer = FeatureEngineer(
+            input_file_path='../data/curated/data.pkl', 
+            output_file_path='../data/curated/features.pkl'
+        )
         df = feature_engineer.run_pipeline()
 
         logger.info('ETAPA 3: Separando dados de treino e teste')

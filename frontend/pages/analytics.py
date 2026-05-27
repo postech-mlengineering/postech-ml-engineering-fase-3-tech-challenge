@@ -10,62 +10,62 @@ from charts.plots import (
 
 
 def analytics_page():
-    st.title("Estatísticas")
+    st.title('Estatísticas')
     
     df, _ = load_data()
 
     if df is None or df.empty:
-        st.warning("Nenhum dado encontrado. Verifique a fonte de dados.")
+        st.warning('Nenhum dado encontrado. Verifique a fonte de dados.')
         return
 
     st.divider()
 
-    tab1, tab2 = st.tabs(["Estatísticas", "Perfis"])
+    tab1, tab2 = st.tabs(['Estatísticas', 'Perfis'])
 
     with tab1:
-        st.subheader("Estatísticas Descritivas")
+        st.subheader('Estatísticas Descritivas')
         
         stat_view = st.selectbox(
-            "Selecione:",
+            'Selecione:',
             [
-                "Análise de Atrasos", 
-                "Análise de Atrasos por Causa",
-                "Análise Temporal de Atrasos"
+                'Análise de Atrasos', 
+                'Análise de Atrasos por Causa',
+                'Análise Temporal de Atrasos'
             ]
         )
 
-        if stat_view == "Distribuição de Pontualidade":
+        if stat_view == 'Distribuição de Pontualidade':
             fig = plot_pie(df)
             st.plotly_chart(fig, width='stretch')
             
-        elif stat_view == "Análise Temporal de Atrasos":
+        elif stat_view == 'Análise Temporal de Atrasos':
             fig = plot_columns_lines(df)
             st.plotly_chart(fig, width='stretch')
             
-        elif stat_view == "Análise de Atrasos":
+        elif stat_view == 'Análise de Atrasos':
             delay_cols = ['DEPARTURE_DELAY', 'ARRIVAL_DELAY']
             delay_labels = ['Atraso Partida', 'Atraso Chegada']
             fig = plot_columns(df, delay_cols, delay_labels, 'Distribuição e Volatilidade dos Atrasos')
             st.plotly_chart(fig, width='stretch')
             
-        elif stat_view == "Análise de Atrasos por Causa":
+        elif stat_view == 'Análise de Atrasos por Causa':
             cause_cols = ['AIR_SYSTEM_DELAY', 'AIRLINE_DELAY', 'LATE_AIRCRAFT_DELAY', 'SECURITY_DELAY', 'WEATHER_DELAY']
             cause_labels = ['Sist. Aéreo', 'Cia Aérea', 'Aeronave Tardia', 'Segurança', 'Clima']
             fig = plot_columns(df, cause_cols, cause_labels, 'Distribuição e Volatilidade dos Atrasos por Causa')
             st.plotly_chart(fig, width='stretch')
 
     with tab2:
-        st.subheader("Perfis de Aeroportos, Rotas e Companhias")
+        st.subheader('Perfis de Aeroportos, Rotas e Companhias')
         
         cluster_option = st.selectbox(
-            "Selecione o perfil:",
-            ["Aeroporto de Origem", "Rota (Origem-Destino)", "Companhia Aérea"]
+            'Selecione o perfil:',
+            ['Aeroporto de Origem', 'Rota (Origem-Destino)', 'Companhia Aérea']
         )
 
-        if cluster_option == "Aeroporto de Origem":
+        if cluster_option == 'Aeroporto de Origem':
             n_items = df['ORIGIN_AIRPORT'].nunique()
             group_key = 'ORIGIN_AIRPORT'
-        elif cluster_option == "Rota (Origem-Destino)":
+        elif cluster_option == 'Rota (Origem-Destino)':
             df['ROUTE'] = df['ORIGIN_AIRPORT'] + '_' + df['DESTINATION_AIRPORT']
             n_items = df['ROUTE'].nunique()
             group_key = 'ROUTE'
@@ -74,9 +74,9 @@ def analytics_page():
             group_key = 'AIRLINE'
 
         if n_items < 5:
-            st.error(f"Dados insuficientes ({n_items}) para gerar clusters significativos.")
+            st.error(f'Dados insuficientes ({n_items}) para gerar clusters significativos.')
         else:
-            with st.spinner("Processando clusters..."):
+            with st.spinner('Processando clusters...'):
                 try:
                     df_res = get_cluster(df, group_key)
                     
@@ -86,4 +86,4 @@ def analytics_page():
                     fig = plot_scatter(df_res, 'FLIGHT_VOLUME', rate_col, profile_col, group_key)
                     st.plotly_chart(fig, width='stretch')
                 except Exception as e:
-                    st.error(f"Erro ao processar clusters: {e}")
+                    st.error(f'Erro ao processar clusters: {e}')

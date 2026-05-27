@@ -15,7 +15,6 @@ from . import(
 def plot_scatter(df: pd.DataFrame, x: str, y: str, color: str, hover_name: str) -> go.Figure:
     fig = go.Figure()
     
-    # Paleta de cores neon para os clusters
     colors = [SYNTH_PINK, SYNTH_TEXT, SYNTH_ORANGE, "#9d00ff", "#00ff00"]
     
     for i, category in enumerate(df[color].unique()):
@@ -51,6 +50,7 @@ def plot_scatter(df: pd.DataFrame, x: str, y: str, color: str, hover_name: str) 
     )
     return fig
 
+
 def plot_correlation_matrix(df: pd.DataFrame) -> go.Figure:
     fig = go.Figure(go.Heatmap(
         z=df.values,
@@ -75,6 +75,7 @@ def plot_correlation_matrix(df: pd.DataFrame) -> go.Figure:
         margin=dict(l=150, r=120, b=120, t=120)
     )
     return fig
+
 
 def plot_pie(df):
     df_temp = df['IS_DELAYED'].value_counts().reset_index()
@@ -102,6 +103,7 @@ def plot_pie(df):
     )
     return fig
 
+
 def plot_columns(df, columns, labels, title):
     df_metrics = df[columns].describe()
     df_metrics.loc['cv'] = df_metrics.loc['std'] / df_metrics.loc['mean']
@@ -115,14 +117,14 @@ def plot_columns(df, columns, labels, title):
     
     colorscale_synth = [[0, SYNTH_PINK], [1, SYNTH_TEXT]]
 
-    # Média
+    #média
     fig.add_trace(go.Bar(
         x=labels, y=df_metrics.loc['mean', columns],
         marker=dict(color=df_metrics.loc['mean', columns], colorscale=colorscale_synth),
         name='Média', textposition='auto'
     ), row=1, col=1)
 
-    # CV
+    #cv
     fig.add_trace(go.Bar(
         x=labels, y=df_metrics.loc['cv', columns],
         marker=dict(color=df_metrics.loc['cv', columns], colorscale=colorscale_synth),
@@ -130,7 +132,7 @@ def plot_columns(df, columns, labels, title):
     ), row=2, col=1)
     fig.add_hline(y=1, line_dash='dash', line_color=SYNTH_ORANGE, row=2, col=1)
 
-    # Curtose
+    #curtose
     fig.add_trace(go.Bar(
         x=labels, y=df_metrics.loc['kurtosis', columns],
         marker=dict(color=df_metrics.loc['kurtosis', columns], colorscale=colorscale_synth),
@@ -148,7 +150,6 @@ def plot_columns(df, columns, labels, title):
         margin=dict(l=120, r=120, b=120, t=120)
     )
 
-    # Ajuste manual de eixos e títulos de subplots
     for i in fig['layout']['annotations']:
         i['font'] = dict(size=14, color=SYNTH_TEXT, family=SYNTH_FONT)
     
@@ -158,6 +159,7 @@ def plot_columns(df, columns, labels, title):
         fig['layout'][axis].update(linecolor=SYNTH_ORANGE, gridcolor=SYNTH_GRID)
         
     return fig
+
 
 def plot_columns_lines(df):
     df_temp = df.copy()
@@ -201,4 +203,57 @@ def plot_columns_lines(df):
     for axis in ['yaxis', 'yaxis2', 'yaxis3']:
         fig['layout'][axis].update(linecolor=SYNTH_ORANGE, gridcolor=SYNTH_GRID)
 
+    return fig
+
+
+def plot_prediction_gauge(prob: float) -> go.Figure:
+    """Gera o gráfico de Gauge no estilo Synthwave."""
+    value = prob * 100
+    
+    bar_color = SYNTH_PINK if value > 50 else SYNTH_TEXT
+    
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=value,
+        number={
+            'suffix': "%", 
+            'font': {'size': 60, 'color': SYNTH_TEXT, 'family': SYNTH_FONT},
+            'valueformat': '.1f'
+        },
+        title={
+            'text': "Probabilidade de Atraso", 
+            'font': {'size': 24, 'color': SYNTH_TEXT, 'family': SYNTH_FONT}
+        },
+        gauge={
+            'axis': {
+                'range': [0, 100], 
+                'tickwidth': 1, 
+                'tickcolor': SYNTH_TEXT,
+                'tickfont': {'family': SYNTH_FONT, 'color': SYNTH_TEXT}
+            },
+            'bar': {'color': bar_color},
+            'bgcolor': SYNTH_BG,
+            'borderwidth': 2,
+            'bordercolor': SYNTH_GRID,
+            'steps': [
+                {'range': [0, 50], 'color': 'rgba(0, 255, 255, 0.05)'},
+                {'range': [50, 100], 'color': 'rgba(255, 0, 255, 0.05)'}
+            ],
+            'threshold': {
+                'line': {'color': SYNTH_ORANGE, 'width': 4},
+                'thickness': 0.75,
+                'value': 80 # Alerta em 80%
+            }
+        }
+    ))
+
+    fig.update_layout(
+        paper_bgcolor=SYNTH_BG,
+        plot_bgcolor=SYNTH_BG,
+        template=None,
+        font={'color': SYNTH_TEXT, 'family': SYNTH_FONT},
+        height=400,
+        margin=dict(l=50, r=50, b=50, t=100)
+    )
+    
     return fig
