@@ -116,7 +116,7 @@ class FeatureEngineer:
         self.df[cols_to_scale] = self.scaler.fit_transform(self.df[cols_to_scale])
 
     def run_pipeline(self):
-        logging.info('Iniciando Pipeline de Feature Engineering')
+        logging.info('Iniciando Pipeline de Engenharia de Features')
         self.load_data()
         
         self._create_datetime()
@@ -133,9 +133,8 @@ class FeatureEngineer:
 
         logging.info(f'Salvando dados processados em: {self.output_file_path}')
         self.df.to_pickle(self.output_file_path)
-        joblib.dump(self.scaler, '../models/scaler.pkl') 
-        return self.df
-
+        joblib.dump(self.scaler, 'models/scaler.pkl') 
+        return self.df, self.scaler
 
 if __name__ == '__main__':
     feature_engineer = FeatureEngineer(

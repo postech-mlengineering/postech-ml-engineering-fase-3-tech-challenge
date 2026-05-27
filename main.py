@@ -59,7 +59,7 @@ def main() -> None:
 
         logger.info('ETAPA 4: Iniciando seleção do modelo')
         trainer = ModelTrainer()
-        best_model_name: str = trainer.run_model_selection(
+        best_model_name = trainer.run_model_selection(
             X_train, y_train, X_test, y_test, 
             n_iter=1
         )
@@ -74,16 +74,10 @@ def main() -> None:
             n_iter=10
         )
 
-        artifacts_path = f'/models/best_model_{best_model_name.lower()}.pkl'
-        logger.info(f'ETAPA 6: Salvando modelo em {artifacts_path}')
+        model_path = f'/models/{best_model_name.lower()}.pkl'
+        logger.info(f'ETAPA 6: Salvando modelo em {model_path}')
         
-        artifacts = {
-            'model': model,
-            'params': best_params,
-            'metrics': metrics,
-            'features': X.columns.tolist()
-        }
-        joblib.dump(artifacts, artifacts_path)
+        joblib.dump(model, model_path)
         
         logger.info('Pipeline executado com sucesso')
 
