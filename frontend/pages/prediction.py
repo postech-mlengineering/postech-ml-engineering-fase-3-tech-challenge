@@ -32,7 +32,7 @@ def prediction_page():
             hour = st.number_input('Hora (HH)', 0, 23, 14)
             weekend = st.selectbox('Fim de Semana?', [0, 1])
             holiday = st.selectbox('Feriado?', [0, 1])
-            haul = st.selectbox('Tipo de Rota', ['SHORT', 'MEDIUM', 'LONG'])
+            haul = st.selectbox('Rota', ['SHORT', 'MEDIUM', 'LONG'])
 
         btn = st.form_submit_button('Prever Atraso', type='primary')
 

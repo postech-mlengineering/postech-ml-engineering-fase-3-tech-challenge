@@ -15,7 +15,7 @@ from . import(
 def plot_scatter(df: pd.DataFrame, x: str, y: str, color: str, hover_name: str) -> go.Figure:
     fig = go.Figure()
     
-    colors = [SYNTH_PINK, SYNTH_TEXT, SYNTH_ORANGE, "#9d00ff", "#00ff00"]
+    colors = [SYNTH_PINK, SYNTH_TEXT, SYNTH_ORANGE, '#9d00ff', '#00ff00']
     
     for i, category in enumerate(df[color].unique()):
         df_subset = df[df[color] == category]
@@ -30,7 +30,7 @@ def plot_scatter(df: pd.DataFrame, x: str, y: str, color: str, hover_name: str) 
                 marker=dict(
                     size=12, 
                     color=colors[i % len(colors)], 
-                    line=dict(width=1, color="white"),
+                    line=dict(width=1, color='white'),
                     opacity=0.8
                 )
             )
@@ -56,7 +56,7 @@ def plot_correlation_matrix(df: pd.DataFrame) -> go.Figure:
         z=df.values,
         x=df.columns,
         y=df.index,
-        colorscale=[[0, SYNTH_PINK], [0.5, "#1a1a2e"], [1, SYNTH_TEXT]],
+        colorscale=[[0, SYNTH_PINK], [0.5, '#1a1a2e'], [1, SYNTH_TEXT]],
         zmin=-1, zmax=1,
         text=df.values,
         texttemplate='%{text:.2f}',
@@ -207,21 +207,20 @@ def plot_columns_lines(df):
 
 
 def plot_prediction_gauge(prob: float) -> go.Figure:
-    """Gera o gráfico de Gauge no estilo Synthwave."""
     value = prob * 100
     
     bar_color = SYNTH_PINK if value > 50 else SYNTH_TEXT
     
     fig = go.Figure(go.Indicator(
-        mode="gauge+number",
+        mode='gauge+number',
         value=value,
         number={
-            'suffix': "%", 
+            'suffix': '%', 
             'font': {'size': 60, 'color': SYNTH_TEXT, 'family': SYNTH_FONT},
             'valueformat': '.1f'
         },
         title={
-            'text': "Probabilidade de Atraso", 
+            'text': 'Probabilidade de Atraso', 
             'font': {'size': 24, 'color': SYNTH_TEXT, 'family': SYNTH_FONT}
         },
         gauge={

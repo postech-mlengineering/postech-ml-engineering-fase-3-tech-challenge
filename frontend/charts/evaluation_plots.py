@@ -22,7 +22,7 @@ def plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> go.Figure:
     z = cm[::-1]
     y_labels = y[::-1]
 
-    colorscale = [[0, "#1a1a2e"], [1, SYNTH_PINK]]
+    colorscale = [[0, '#1a1a2e'], [1, SYNTH_PINK]]
     
     fig = ff.create_annotated_heatmap(
         z=z, 
@@ -30,7 +30,7 @@ def plot_confusion_matrix(y_test: pd.Series, y_pred: np.ndarray) -> go.Figure:
         y=y_labels, 
         annotation_text=z, 
         colorscale=colorscale,
-        font_colors=[SYNTH_TEXT, "white"]
+        font_colors=[SYNTH_TEXT, 'white']
     )
     
     fig.update_layout(
@@ -81,8 +81,8 @@ def plot_roc_curve(y_test: pd.Series, y_probs: np.ndarray) -> go.Figure:
         plot_bgcolor=SYNTH_BG,
         template=None,
         font=dict(family=SYNTH_FONT, color=SYNTH_TEXT),
-        xaxis=dict(title="Taxa Falso Positivo", gridcolor=SYNTH_GRID, linecolor=SYNTH_ORANGE, showgrid=True),
-        yaxis=dict(title="Taxa Verdadeiro Positivo", gridcolor=SYNTH_GRID, linecolor=SYNTH_ORANGE, showgrid=True),
+        xaxis=dict(title='Taxa Falso Positivo', gridcolor=SYNTH_GRID, linecolor=SYNTH_ORANGE, showgrid=True),
+        yaxis=dict(title='Taxa Verdadeiro Positivo', gridcolor=SYNTH_GRID, linecolor=SYNTH_ORANGE, showgrid=True),
         legend=dict(bgcolor=SYNTH_BG, bordercolor=SYNTH_PINK, font=dict(family=SYNTH_FONT)),
         showlegend=True,
         height=600,
@@ -113,7 +113,7 @@ def plot_bars(df: pd.DataFrame) -> go.Figure:
         plot_bgcolor=SYNTH_BG,
         template=None,
         font=dict(family=SYNTH_FONT, color=SYNTH_TEXT),
-        xaxis=dict(title="Importância Relativa", gridcolor=SYNTH_GRID, linecolor=SYNTH_ORANGE, showgrid=False),
+        xaxis=dict(title='Importância Relativa', gridcolor=SYNTH_GRID, linecolor=SYNTH_ORANGE, showgrid=False),
         yaxis=dict(autorange='reversed', linecolor=SYNTH_ORANGE, showgrid=False),
         height=550,
         margin=dict(l=400, r=120, b=120, t=120)

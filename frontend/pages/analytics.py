@@ -24,7 +24,7 @@ def analytics_page():
 
     with tab1:
         st.subheader('Estatísticas Descritivas')
-        
+
         stat_view = st.selectbox(
             'Selecione:',
             [
@@ -47,7 +47,7 @@ def analytics_page():
             delay_labels = ['Atraso Partida', 'Atraso Chegada']
             fig = plot_columns(df, delay_cols, delay_labels, 'Distribuição e Volatilidade dos Atrasos')
             st.plotly_chart(fig, width='stretch')
-            
+
         elif stat_view == 'Análise de Atrasos por Causa':
             cause_cols = ['AIR_SYSTEM_DELAY', 'AIRLINE_DELAY', 'LATE_AIRCRAFT_DELAY', 'SECURITY_DELAY', 'WEATHER_DELAY']
             cause_labels = ['Sist. Aéreo', 'Cia Aérea', 'Aeronave Tardia', 'Segurança', 'Clima']
