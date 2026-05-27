@@ -14,7 +14,7 @@ Aplicado durante a engenharia de features para gerar perfis de risco de aeroport
 
 A seleção do melhor modelo é feita via `RandomizedSearchCV` (CV=3), comparando o F1-Score ponderado entre os três candidatos abaixo. O vencedor passa por um fine-tuning adicional (CV=5, n_iter=10) antes de ser persistido.
 
-XGBoost
+XGBoost (Melhor Desempenho)
 
 Algoritmo de gradient boosting baseado em árvores de decisão com otimizações de velocidade e memória (`tree_method='hist'`). Combina diversas árvores fracas de forma sequencial, corrigindo os erros das anteriores por gradiente descendente. Destacou-se pela capacidade de capturar interações não lineares entre as features de atraso (momentum, perfis de aeroporto e histórico da aeronave).
 
