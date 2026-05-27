@@ -114,7 +114,7 @@ python main.py
 
 ### Dashboard
 
-O projeto inclui um dashboard interativo em **Streamlit** para análise e inferência em tempo real.
+O projeto inclui um dashboard interativo em **Streamlit** para análise e predição.
 
 ```bash
 cd frontend
@@ -125,10 +125,10 @@ O dashboard conta com quatro páginas:
 
 | Página | Descrição |
 |---|---|
-| **Sobre** | Documentação técnica do projeto: metodologia, pipeline e resultados |
-| **Estatísticas** | Análise exploratória dos dados históricos e perfis de risco via clustering |
+| **Sobre** | Resumo do projeto: metodologia, pipeline e resultados |
+| **Estatísticas** | Análise exploratória dos dados |
 | **Performance** | Métricas do modelo: relatório de classificação, matriz de confusão, curva ROC e importância das features |
-| **Predição de Atraso** | Interface para inferência em tempo real com gauge de probabilidade de atraso |
+| **Predição de Atraso** | Interface para predição de atraso |
 
 
 ### Notebooks
@@ -153,7 +153,7 @@ jupyter notebook
 | Serialização | Joblib | `1.5.3` | Ferramenta para persistência de modelos de ML e execução de tarefas |
 | Feriados | Holidays | `0.97` | Biblioteca para identificação de feriados dos EUA |
 | Kneedle | Kneed | `0.8.6` | Biblioteca para identificação automática do k ideal no KMeans |
-| Gerenciamento | uv | — | Gerenciador de ambientes virtuais para isolamento de dependências |
+| Gerenciamento | uv | `-` | Gerenciador de ambientes virtuais para isolamento de dependências |
 
 
 ## Estrutura do Projeto
@@ -166,19 +166,17 @@ jupyter notebook
 ├── models/                     # Artefatos salvos dos modelos
 ├── notebooks/                  # Análises exploratórias
 ├── frontend/                   # Dashboard Streamlit
-│   ├── app.py                  # Ponto de entrada e navegação
-│   ├── pages/                  # Páginas: about, analytics, performance, prediction
-│   ├── charts/                 # Gráficos Plotly com tema Synthwave
-│   └── services/               # Carregamento de dados, modelo e clustering
+│   ├── app.py                  # Ponto de entrada
+│   ├── pages/                  # Páginas
+│   ├── charts/                 # Gráficos
+│   └── services/               # Carregamento de dados e artefatos
 ├── src/
 │   ├── data_cleaning.py        # Limpeza e cruzamento dos dados brutos
-│   ├── feature_engineering.py  # Engenharia de features e balanceamento
-│   ├── model_config.py         # Configuração dos modelos e hiperparâmetros
+│   ├── feature_engineering.py  # Engenharia de features
+│   ├── model_config.py         # Configuração dos modelos elegíveis
 │   ├── model_trainer.py        # Seleção de modelo e fine-tuning
 │   └── utils/
-│       ├── helpers.py          # Funções auxiliares (elbow method, etc.)
-│       ├── plots.py
-│       └── evaluation_plots.py
+│       ├── helpers.py          # Funções auxiliares
 ├── main.py                     # Ponto de entrada do pipeline de ML
 └── requirements.txt
 ```
