@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-from utils.helpers import get_best_k
+from src.utils.helpers import get_best_k
 
 
 logger = logging.getLogger(__name__)
