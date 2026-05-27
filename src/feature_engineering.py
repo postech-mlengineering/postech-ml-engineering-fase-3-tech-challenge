@@ -134,7 +134,7 @@ class FeatureEngineer:
         logging.info(f'Salvando dados processados em: {self.output_file_path}')
         self.df.to_pickle(self.output_file_path)
         joblib.dump(self.scaler, 'models/scaler.pkl') 
-        return self.df, self.scaler
+        return self.df
 
 if __name__ == '__main__':
     feature_engineer = FeatureEngineer(

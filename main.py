@@ -74,7 +74,7 @@ def main() -> None:
             n_iter=10
         )
 
-        model_path = f'/models/{best_model_name.lower()}.pkl'
+        model_path = f'/models/model_{best_model_name.lower()}.pkl'
         logger.info(f'ETAPA 6: Salvando modelo em {model_path}')
         
         joblib.dump(model, model_path)
